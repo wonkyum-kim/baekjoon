@@ -14,6 +14,6 @@ int main()
 	int x3 = a * b100;
 	int x4 = a * b;
 
-	cout << x1 << '\n' << x2 << '\n' << x3 << '\n' << x4;
+	std::cout << x1 << '\n' << x2 << '\n' << x3 << '\n' << x4;
 	return 0;
 }
