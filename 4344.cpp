@@ -3,6 +3,7 @@
 
 int main()
 {
+	// 소수점 3자리까지 반올림하여 표현하는 방법
 	std::cout.setf(std::ios::fixed);
 	std::cout.precision(3);
 
