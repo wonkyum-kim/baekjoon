@@ -7,7 +7,7 @@ int main()
 
 	int b100 = b / 100;
 	int b1 = b % 10;
-  int b10 = ((b - b1) / 10) % 10;
+ 	int b10 = ((b - b1) / 10) % 10;
 
 	int x1 = a * b1;
 	int x2 = a * b10;
