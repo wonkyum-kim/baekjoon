@@ -39,4 +39,5 @@ int main()
 		std::cout << count / num * 100 << "%\n";
 		a.clear();
 	}
+	
 }
