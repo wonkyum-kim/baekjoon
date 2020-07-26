@@ -10,4 +10,5 @@ int main()
 	std::string s5 = R"(||_/=\\__|)";
 
 	std::cout << s1 << '\n' << s2 << '\n' << s3 << '\n' << s4 << '\n' << s5;
+	
 }
