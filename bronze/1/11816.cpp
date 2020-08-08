@@ -6,7 +6,7 @@ int main()
 	std::cin.unsetf(std::ios::oct);
 	std::cin.unsetf(std::ios::hex);
 	
-	int a;
+	auto a;
 	std::cin >> a;
 	std::cout << a;
 }
