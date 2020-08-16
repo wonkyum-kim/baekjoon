@@ -24,5 +24,5 @@ int main()
 	std::cout << std::setw(15) << "NX Cruiser" << std::setw(15) << "Medium Fighter" << std::setw(11) << "Limited" << std::setw(10) << "18" << '\n';
 	std::cout << std::setw(15) << "N1 Starfighter" << std::setw(15) << "Medium Fighter" << std::setw(11) << "Unlimited" << std::setw(10) << "25" << '\n';
 	std::cout << std::setw(15) << "Royal Cruiser" << std::setw(15) << "Light Combat" << std::setw(11) << "Limited" << std::setw(10) << "4" << '\n';
-}
+}	
 
