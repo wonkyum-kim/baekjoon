@@ -1,0 +1,3 @@
+p = input().split(' ')
+A, B = int(p[0]), int(p[1])
+print(A + B)
