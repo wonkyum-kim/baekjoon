@@ -5,8 +5,7 @@ int main()
 {
 	vector<int> price;
 
-	for (int i = 0; i < 5; i++)
-	{
+	for (int i = 0; i < 5; i++) {
 		int a;
 		std::cin >> a;
 		price.push_back(a);
