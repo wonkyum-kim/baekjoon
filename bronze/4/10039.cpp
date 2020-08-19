@@ -6,8 +6,7 @@ int main()
 	int sum = 0;
 	std::vector<int> score;
 
-	for (int i = 0; i < 5; i++)
-	{
+	for (int i = 0; i < 5; i++) {
 		int a;
 		std::cin >> a;
 		if (a < 40)
