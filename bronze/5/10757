@@ -1,0 +1,5 @@
+lst = []
+
+a = input()
+lst.append(a.split())
+print(int(lst[0][0])+int(lst[0][1]))
