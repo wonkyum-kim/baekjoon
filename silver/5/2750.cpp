@@ -8,8 +8,7 @@ int main()
 	std::cin >> num;
 
 	std::vector<int> a;
-	for (size_t i = 0; i < num; i++)
-	{
+	for (size_t i = 0; i < num; i++) {
 		int x = 0;
 		std::cin >> x;
 		a.push_back(x);
