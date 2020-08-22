@@ -1,39 +1,38 @@
 #include <iostream>
+#include <stack>
 #include <string>
-#include <algorithm>
 
 int main()
 {
-    int test = 0;
-    std::cin >> test;
+    int t = 0;
+    std::cin >> t;
 
-    for (auto i = 0; i < test; ++i) {
-        std::string ps;
-        std::cin >> ps;
-        int count = 0;
+    for (auto i = 0; i < t; ++i) {
+        std::string s;
+        std::cin >> s;
 
-        // 괄호가 안 닫히는 경우
-        if (ps.back() == '(' || ps.front() == ')') {
-            std::cout << "NO\n";
-            goto ONE;
-        }
-        else {
-            for(int j = ps.length() - 1; j >= 0; --j) {
-                if (ps[j] == ')')
-                    count++;
+        std::stack<char> stack;
+        bool flag = false;
+
+        for (auto j = 0; j < s.length(); ++j) {
+            if (s[j] == '(') {
+                stack.push(s[j]);
+            }
+            else if (s[j] == ')') {
+                if (stack.empty() || stack.top() != '(') {
+                    flag = true;
+                    break;
+                }
                 else {
-                    count--;
-                    if (count < 0) {
-                        std::cout << "NO\n";
-                        goto ONE;
-                    }
+                    stack.pop();
                 }
             }
         }
-        if (count == 0)
+
+        if (!flag && stack.empty()) {
             std::cout << "YES\n";
+        }
         else
             std::cout << "NO\n";
-    ONE:;
     }
 }
