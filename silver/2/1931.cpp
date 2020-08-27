@@ -1,34 +1,41 @@
 #include <iostream>
-#include <vector>
 #include <algorithm>
 #include <utility>
+#include <vector>
 
-int main()
+std::vector<std::pair<int, int>> greedy_activity_selector(std::vector<std::pair<int, int>>& v)
 {
-	int n = 0;	std::cin >> n;
-	std::vector<std::pair<long long, long long>> v;
-	for (auto i = 0; i < n; ++i) {
-		long long a = 0, b = 0;
+	// sort by finish time
+	std::sort(v.begin(), v.end(), [](auto a, auto b) {return a.second != b.second ? a.second < b.second : a.first < b.first; });
+
+	// selected activity vector
+	std::vector<std::pair<int, int>> A;
+	A.push_back(v[0]);
+
+	size_t k = 0;
+	size_t n = v.size();
+
+	for (auto m = 1; m < n; ++m) {
+		if (v[m].first >= v[k].second) {
+			A.push_back(v[m]);
+			k = m;
+		}
+	}
+	return A;
+}
+
+int main() {
+	int test;
+	std::cin >> test;
+
+	std::vector<std::pair<int, int>> v;
+
+	for (auto i = 0; i < test; ++i) {
+		int a = 0, b = 0;
 		std::cin >> a >> b;
 		v.push_back({ a, b });
 	}
 
-	std::sort(v.begin(), v.end(), [](std::pair<long long, long long> a, std::pair<long long, long long> b) {return a.second != b.second ? a.second < b.second : a.first < b.first; });
-	size_t i = 1, j = 0;
-	int count = 1;
-	while (true) {
-		if (v[i].first >= v[j].second) {
-			count++;
-			j = i;
-			i++;
-		}
-		else {
-			i++;
-		}
-
-		if (i == v.size()) {
-			break;
-		}
-	}
-	std::cout << count;
+	std::vector<std::pair<int, int>> A = greedy_activity_selector(v);
+	std::cout << A.size();
 }
