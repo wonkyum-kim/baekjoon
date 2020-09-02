@@ -1,51 +1,58 @@
+#include <vector>
 #include <iostream>
 #include <algorithm>
 #include <limits>
 
-int paint(int x, int y, char arr[][50])
+int re_paint(const std::vector<std::vector<char>>& chess, const size_t x, const size_t y)
 {
-    int count1 = 0, count2 = 0;
-    for (auto i = x; i < x + 8; ++i)
-    {
-        for (auto j = y; j < y + 8; ++j)
-        {
-            if ((i + j) % 2 == 0 && 'W' != arr[i][j])
-                count1++;
-            else if ((i + j) % 2 == 1 && 'W' == arr[i][j])
-                count1++;
+	int count1 = 0, count2 = 0;
 
-            if ((i + j) % 2 == 0 && 'B' != arr[i][j])
-                count2++;
-            else if ((i + j) % 2 == 1 && 'B' == arr[i][j])
-                count2++;
-        }
-    }
-    int min = std::min(count1, count2);
-    return min;
+	for (auto i = x; i < x + 8; ++i) {
+		for (auto j = y; j < y + 8; ++j) {
+
+			// first case : first cell is black.
+			// BWBWBW...
+			if ((i + j) % 2 == 0 && chess[i][j] == 'W') {
+				count1++;
+			}
+			else if ((i + j) % 2 == 1 && chess[i][j] == 'B') {
+				count1++;
+			}
+
+			// second case : first cell is white.
+			// WBWBWB...
+			if ((i + j) % 2 == 0 && chess[i][j] == 'B') {
+				count2++;
+			}
+			else if ((i + j) % 2 == 1 && chess[i][j] == 'W') {
+				count2++;
+			}
+		}
+	}
+	return std::min(count1, count2);
 }
 
 int main()
 {
-    char arr[50][50];
-    int n, m;
-    std::cin >> n >> m;
+	int N = 0, M = 0;
+	std::cin >> N >> M;
 
-    for (auto i = 0; i < n; ++i)
-        for (auto j = 0; j < m; ++j)
-            std::cin >> arr[i][j];
+	std::vector<std::vector<char>> chess(N + 1, std::vector<char>(M + 1));
+	for (auto i = 1; i <= N; ++i) {
+		for (auto j = 1; j <= M; ++j) {
+			std::cin >> chess[i][j];
+		}
+	}
 
-    int count = 0;
-    int min = std::numeric_limits<int>::max();
+	int min_value = std::numeric_limits<int>::max();
 
-    for (auto i = 0; i <= n - 8; ++i)
-    {
-        for (auto j = 0; j <= m - 8; ++j)
-        {
-            count = paint(i, j, arr);
-            if (min > count)
-                min = count;
-        }
-    }
+	for (auto i = 1; i <= N - 7; ++i) {
+		for (auto j = 1; j <= M - 7; ++j) {
+			if (min_value > re_paint(chess, i, j)) {
+				min_value = re_paint(chess, i, j);
+			}
+		}
+	}
 
-    std::cout << min;
+	std::cout << min_value;
 }
