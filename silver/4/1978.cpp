@@ -23,11 +23,11 @@ int main()
 	int input = 0;
 	int count = 0;
 	
-	for(auto i = 0; i < n; i++)
-	{
+	for(auto i = 0; i < n; i++) {
 	    std::cin >> input;
-	    if(is_prime(input))
+	    if(is_prime(input)) {
 	        count++;
+	    }
 	}
 	
 	std::cout << count;
