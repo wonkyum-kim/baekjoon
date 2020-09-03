@@ -4,39 +4,39 @@
 
 int main()
 {
-    while(true) {
+    while (true) {
         std::string s;
         std::getline(std::cin, s);
-        if(s == ".")
+        if (s == ".")
             break;
-            
+
         std::stack<char> stack;
-        int flag = false;
-        
-        for(int i = 0; i < s.length(); ++i) {
-            if(s[i] == '(' || s[i] == '[') {
+        int flag = true;
+
+        for (int i = 0; i < s.length(); ++i) {
+            if (s[i] == '(' || s[i] == '[') {
                 stack.push(s[i]);
-            } 
-            else if(s[i] == ')') {
-                if(stack.empty() || stack.top() != '(') {
-                    flag = true;
+            }
+            else if (s[i] == ')') {
+                if (stack.empty() || stack.top() != '(') {
+                    flag = false;
                     break;
-                } 
+                }
                 else {
-                   stack.pop();
+                    stack.pop();
                 }
             }
-            else if(s[i] == ']') {
-                if(stack.empty() || stack.top() != '[') {
-                    flag = true;
+            else if (s[i] == ']') {
+                if (stack.empty() || stack.top() != '[') {
+                    flag = false;
                     break;
-                } 
+                }
                 else {
-                   stack.pop();
+                    stack.pop();
                 }
             }
         }
-        if(stack.empty() && !flag)
+        if (stack.empty() && flag)
             std::cout << "yes\n";
         else
             std::cout << "no\n";
