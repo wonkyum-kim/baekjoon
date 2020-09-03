@@ -27,8 +27,9 @@ int main()
 			q.pop();
 			v.push_back(c);
 
-			if (q.empty())
+			if (q.empty()) {
 				break;
+			}
 		}
 	}
 
