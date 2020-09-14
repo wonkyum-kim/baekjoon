@@ -52,5 +52,3 @@ int main()
 	}
 	std::cout << find_max_crossing_subarray(height, 1, (1 + N) / 2, N);
 }
-
-// 두 함수가 같이 시너지를 내야 정답이 나오는구나...
