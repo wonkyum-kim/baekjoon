@@ -25,11 +25,10 @@ int main()
 	std::sort(A.begin(), A.end());
 	std::sort(B.begin(), B.end());
 
-	std::vector<int> diff1;
-	std::vector<int> diff2;
+	std::vector<int> diff;
 	
-	std::set_difference(A.begin(), A.end(), B.begin(), B.end(), std::inserter(diff1, diff1.begin()));
-	std::set_difference(B.begin(), B.end(), A.begin(), A.end(), std::inserter(diff2, diff2.begin()));
+	std::set_symmetric_difference(A.begin(), A.end(), B.begin(), B.end(), std::inserter(diff, diff.begin()));
 
-	std::cout << diff1.size() + diff2.size();
+	std::cout << diff.size();
 }
+
