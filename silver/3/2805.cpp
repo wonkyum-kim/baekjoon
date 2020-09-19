@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <algorithm>
 
 int main()
 {
@@ -30,9 +31,7 @@ int main()
 
 		if (sum >= M) {
 			low = mid + 1;
-			if (result < mid) {
-				result = mid;
-			}
+			result = std::max(mid, result);
 		}
 		else if (sum < M) {
 			high = mid - 1;
