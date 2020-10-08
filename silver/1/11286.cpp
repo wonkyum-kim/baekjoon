@@ -9,41 +9,29 @@ int main()
 	std::cin.tie(0);
 	int n = 0;
 	std::cin >> n;
-	
-	// min priority queue
-	std::priority_queue<int, std::vector<int>, std::greater<int>> plus;
-	// max priority queue
-	std::priority_queue<int> minus;
 
+	auto cmp = [](int a, int b) {
+		if (std::abs(a) == std::abs(b)) {
+			return a > b;
+		}
+		else {
+			return std::abs(a) > std::abs(b);
+		}
+	};
+
+	std::priority_queue<int, std::vector<int>, decltype(cmp)> q(cmp);
 	for (auto i = 0; i < n; ++i) {
 		int x = 0;
 		std::cin >> x;
-		if (x == 0 && plus.empty() && minus.empty()) {
-			std::cout << "0\n";
+		if (x == 0 && q.empty()) {
+			std::cout << '0' << '\n';
 		}
-		else if (x == 0 && plus.empty() && !minus.empty()) {
-			std::cout << minus.top() << '\n';
-			minus.pop();
+		else if (x == 0 && !q.empty()) {
+			std::cout << q.top() << '\n';
+			q.pop();
 		}
-		else if (x == 0 && !plus.empty() && minus.empty()) {
-			std::cout << plus.top() << '\n';
-			plus.pop();
-		}
-		else if (x == 0 && !plus.empty() && !minus.empty()) {
-			if (std::abs(minus.top()) > plus.top()) {
-				std::cout << plus.top() << '\n';
-				plus.pop();
-			}
-			else {
-				std::cout << minus.top() << '\n';
-				minus.pop();
-			}
-		}
-		else if (x < 0) {
-			minus.push(x);
-		}
-		else if (x > 0) {
-			plus.push(x);
+		else {
+			q.push(x);
 		}
 	}
 }
