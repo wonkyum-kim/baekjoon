@@ -1,17 +1,72 @@
 #include <iostream>
+#include <queue>
 #include <vector>
-#include <string>
-#include <algorithm>
-#include <deque>
+#include <list>
 
-void fill_deque(const int N, std::deque<int>& dq) 
+template<typename T>
+struct CircularDeque {
+	std::list<T> cd;
+
+	// front access
+	T front() {
+		return cd.front();
+	}
+	// back access
+	T back() {
+		return cd.back();
+	}
+	// push_front
+	void push_front(const T& key) {
+		cd.push_front(key);
+	}
+	// push_back
+	void push_back(const T& key) {
+		cd.push_back(key);
+	}
+	// pop_front
+	void pop_front() {
+		cd.pop_front();
+	}
+	// pop_back
+	void pop_back() {
+		cd.pop_front();
+	}
+	// next access
+	T next() {
+		shift_left();
+		return cd.front();
+	}
+	// prev access
+	T prev() {
+		cd.shift_right();
+		return cd.front();
+	}
+	// empty
+	bool empty() {
+		return cd.empty() ? true : false;
+	}
+	// shift_right
+	void shift_right() {
+		T temp = cd.back();
+		cd.pop_back();
+		cd.push_front(temp);
+	}
+	// shift_left
+	void shift_left() {
+		T temp = cd.front();
+		cd.pop_front();
+		cd.push_back(temp);
+	}
+};
+
+void fill_cd(const int N, CircularDeque<int>& cd)
 {
 	for (auto i = 1; i <= N; ++i) {
-		dq.push_back(i);
+		cd.push_back(i);
 	}
 }
 
-void fill_keys(const int M, std::vector<int>& key)
+void fill_key(const int M, std::vector<int>& key)
 {
 	for (auto i = 0; i < M; ++i) {
 		int index = 0;
@@ -20,62 +75,49 @@ void fill_keys(const int M, std::vector<int>& key)
 	}
 }
 
+
 int main()
 {
-	int N = 0;
-	int M = 0;
-	std::cin >> N >> M;
+	int n = 0;
+	int m = 0;
+	std::cin >> n >> m;
 
-	std::deque<int> dq;
-	fill_deque(N, dq);
-
+	CircularDeque<int> cd;
+	fill_cd(n, cd);
 	std::vector<int> key;
-	fill_keys(M, key);
+	fill_key(m, key);
+	size_t count_total = 0;
 
-	size_t min_count = 0;
+	for (auto i = 0; i < m; ++i) {
 
-	for (auto i = 0; i < M; ++i) {
 		size_t count_left = 0;
 		size_t count_right = 0;
 
-		if (dq.front() == key[i]) {
-			dq.pop_front();
-		}
+		if (cd.front() == key[i]) {
+			cd.pop_front();
+		} 
 		else {
-			std::deque<int> temp_left = dq;
-			// shift left.
-			while (true) {
-				int not_key = temp_left.front();
-				temp_left.pop_front();
-				temp_left.push_back(not_key);
+			CircularDeque<int> temp1 = cd;
+			CircularDeque<int> temp2 = cd;
+
+			while (temp1.front()!=key[i]) {
+				temp1.shift_left();
 				count_left++;
-				if (temp_left.front() == key[i]) {
-					temp_left.pop_front();
-					break;
-				}
 			}
-			std::deque<int> temp_right = dq;
-			// shift right.
-			while (true) {
-				int not_key = temp_right.back();
-				temp_right.pop_back();
-				temp_right.push_front(not_key);
+			while (temp2.front() != key[i]) {
+				temp2.shift_right();
 				count_right++;
-				if (temp_right.front() == key[i]) {
-					temp_right.pop_front();
-					break;
-				}
 			}
-			min_count += std::min(count_left, count_right);
-			if (count_left < count_right) {
-				dq = temp_left;
-				temp_right = dq;
+			if (count_left > count_right) {
+				count_total += count_right;
+				cd = temp2;
 			}
 			else {
-				dq = temp_right;
-				temp_left = dq;
+				count_total += count_left;
+				cd = temp1;
 			}
+			cd.pop_front();
 		}
 	}
-	std::cout << min_count;
+	std::cout << count_total;
 }
