@@ -27,3 +27,4 @@ int main()
 		std::cout << count + 1;
 	}
 }
+	
