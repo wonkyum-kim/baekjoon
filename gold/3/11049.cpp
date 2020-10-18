@@ -71,9 +71,6 @@ int main()
 		}
 		p.push_back(c);
 	}
-
-	int res = std::numeric_limits<int>::max();
-
 	auto [m, s] = matrix_chain_order(p);
 	std::cout << m[1][n];
 }
