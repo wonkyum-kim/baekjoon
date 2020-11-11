@@ -1,15 +1,27 @@
-#include <vector>
 #include <iostream>
+#include <vector>
+#include <string>
 #include <algorithm>
 
-long long find_max_crossing_subarray(const std::vector<long long>& A, const size_t low, const size_t mid, const size_t high)
+long long find_maximum_subarray(const std::vector<long long>& A, const size_t low, const size_t high)
 {
+	// base case
+	if (low == high) {
+		return A[low];
+	}
+
+	// find a possible answer in the left subarray and the right subarray.
+	size_t mid = (low + high) / 2;
+	auto possible1 = std::max(find_maximum_subarray(A, low, mid), find_maximum_subarray(A, mid + 1, high));
+
+	// find a possible answer in the crossing subarray.
+	size_t i = mid;
+	size_t j = mid;
 	long long height = A[mid];
 	long long width = 1;
-	long long result = A[mid];
-	size_t i = mid, j = mid;
-
-	while (i > low || j < high) {
+	long long possible2 = A[mid] * 1;
+	
+	while (low < i || j < high) {
 		if (j < high && (i == low || A[j + 1] > A[i - 1])) {
 			height = std::min(height, A[++j]);
 		}
@@ -17,38 +29,23 @@ long long find_max_crossing_subarray(const std::vector<long long>& A, const size
 			height = std::min(height, A[--i]);
 		}
 		width = j - i + 1;
-		long long temp = width * height;
-		result = std::max(result, temp);
+		long long temp = height * width;
+		possible2 = std::max(temp, possible2);
 	}
-	return result;
-}
-
-long long find_maximum_subarray(const std::vector<long long>& A, const size_t low, const size_t high)
-{	
-	// 1칸의 사각형의 넓이=높이
-	if (low == high) {
-		return A[low];
-	}
-	size_t mid = (low + high) / 2;
-	long long result = std::max(find_maximum_subarray(A,low,mid),find_maximum_subarray(A,mid+1,high));
-	result = std::max(result, find_max_crossing_subarray(A, low, mid, high));
-
-	return result;
+	return std::max(possible1, possible2);
 }
 
 int main()
 {
-	long long N = 0;
-	std::cin >> N;
-	std::vector<long long> height;
+	long long n = 0;
+	std::cin >> n;
 
 	constexpr long long dummy = 0;
-	height.push_back(dummy);
-	// N번째 사각형의 높이는 height[N]이다.
-	for (auto i = 1; i <= N; ++i) {
-		long long temp = 0;
-		std::cin >> temp;
-		height.push_back(temp);
+	std::vector<long long> A{ dummy };
+	for (auto i = 0; i < n; ++i) {
+		long long h = 0;
+		std::cin >> h;
+		A.push_back(h);
 	}
-	std::cout << find_max_crossing_subarray(height, 1, (1 + N) / 2, N);
+	std::cout << find_maximum_subarray(A, 1, n);
 }
