@@ -3,39 +3,38 @@
 #include <string>
 
 
-void quad_tree(size_t x1, size_t y1, size_t n, std::vector<std::vector<int>>& v)
+void quad_tree(size_t r1, size_t c1, size_t n, std::vector<std::vector<int>>& v)
 {
 	if (n == 1) {
-		std::cout << v[x1][y1];
+		std::cout << v[r1][c1];
 		return;
 	}
 
-	size_t x2 = x1 + n;
-	size_t y2 = y1 + n;
+	size_t r2 = r1 + n;
+	size_t c2 = c1 + n;
 	bool flag = true;
 
-	for (auto i = x1; i < x2; ++i) {
-		for (auto j = y1; j < y2; ++j) {
-			if (v[x1][y1] != v[i][j]) {
+	for (auto i = r1; i < r2; ++i) {
+		for (auto j = c1; j < c2; ++j) {
+			if (v[r1][c1] != v[i][j]) {
 				flag = false;
-				break;
+				goto loop_out;
 			}
-		}
-		if (flag == false) {
-			break;
 		}
 	}
 
+loop_out:
+
 	if (flag == true) {
-		std::cout << v[x1][y1];
+		std::cout << v[r1][c1];
 		return;
 	}
 
 	std::cout << '(';
-	quad_tree(x1, y1, n / 2, v);
-	quad_tree(x1, y1 + n / 2, n / 2, v);
-	quad_tree(x1 + n / 2, y1, n / 2, v);
-	quad_tree(x1 + n / 2, y1 + n / 2, n / 2, v);
+	quad_tree(r1, c1, n / 2, v);
+	quad_tree(r1, c1 + n / 2, n / 2, v);
+	quad_tree(r1 + n / 2, c1, n / 2, v);
+	quad_tree(r1 + n / 2, c1 + n / 2, n / 2, v);
 	std::cout << ')';
 }
 
