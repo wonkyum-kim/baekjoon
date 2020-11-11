@@ -3,7 +3,7 @@
 #include <string>
 #include <algorithm>
 
-long long find_maximum_subarray(const std::vector<long long>& A, const size_t low, const size_t high)
+long long histogram(const std::vector<long long>& A, const size_t low, const size_t high)
 {
 	// base case
 	if (low == high) {
@@ -47,5 +47,5 @@ int main()
 		std::cin >> h;
 		A.push_back(h);
 	}
-	std::cout << find_maximum_subarray(A, 1, n);
+	std::cout << histogram(A, 1, n);
 }
