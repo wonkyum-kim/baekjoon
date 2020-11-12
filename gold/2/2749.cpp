@@ -19,7 +19,7 @@ long long fibonacci(const long long n)
 			f[i] = f[i - 1] + f[i - 2];
 			f[i] %= 1'000'000;
 		}
-		return f[n % 1'500'000];
+		return f[n];
 	}
 }
 
