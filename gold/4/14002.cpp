@@ -37,7 +37,7 @@ int main()
 			auto lower = std::lower_bound(L.begin(), L.end(), A[i]);
 			auto idx = std::distance(L.begin(), lower);
 			L[idx] = A[i];
-			P[i] = std::distance(L.begin(), lower + 1);
+			P[i] = std::distance(L.begin(), lower) + 1;
 		}
 	}
 
