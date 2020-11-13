@@ -6,15 +6,14 @@ int main()
 {
 	int n = 0;
 	std::cin >> n;
-	std::vector<int> A(n + 1);
-	std::vector<int> D(n + 1);
+	std::vector<long long> A(n + 1);
 	for (auto i = 1; i <= n; ++i) {
 		std::cin >> A[i];
 	}
-	std::vector<int> L{ 0 };
+	std::vector<long long> L;
 
 	for (auto i = 1; i <= n; ++i) {
-		if (L.back() < A[i]) {
+		if (L.empty() || L.back() < A[i]) {
 			L.push_back(A[i]);
 		}
 		else {
@@ -24,5 +23,5 @@ int main()
 		}
 	}
 
-	std::cout << std::distance(L.begin(), L.end()) - 1;
+	std::cout << std::distance(L.begin(), L.end());
 }
