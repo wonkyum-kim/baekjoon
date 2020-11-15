@@ -16,7 +16,7 @@ void dp(std::vector<int>& coin, int n, int k)
 	}
 
 	for (auto i = 1; i <= k; ++i) {
-		for (auto j = 1; j <= i; ++j) {
+		for (auto j = 1; j <= i / 2; ++j) {
 			won[i] = std::min(won[i], won[j] + won[i - j]);
 		}
 	}
