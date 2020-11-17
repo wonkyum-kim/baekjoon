@@ -1,41 +1,29 @@
+#include <vector>
 #include <iostream>
-#include <queue>
-#include <string>
 #include <algorithm>
+#include <cassert>
 
 int main()
 {
-	std::queue<int> q;
-	int n = 0, k = 0;
+	int n = 0;
+	int k = 0;
 	std::cin >> n >> k;
-
-	for (int i = 1; i <= n; ++i) {
-		q.push(i);
-	}
-
 	std::vector<int> v;
-
-	while (true) {
-		if (!q.empty()) {
-			for (int i = 1; i <= k - 1; ++i) {
-				int a = q.front();
-				q.pop();
-				q.push(a);
-			}
-
-			int c = q.front();
-			q.pop();
-			v.push_back(c);
-
-			if (q.empty()) {
-				break;
-			}
+	for (auto i = 1; i <= n; ++i) {
+		v.push_back(i);
+	}
+	
+	int head = 0;
+	std::cout << '<';
+	for (auto i = n; i > 0; --i) {
+		if (i != 1) {
+			std::cout << v[(head + k - 1) % i] << ", ";
 		}
+		else {
+			std::cout << v[(head + k - 1) % i];
+		}
+		head = (head + k - 1) % i;
+		v.erase(v.begin() + head);
 	}
-
-	std::cout << "<";
-	for (int i = 0; i < v.size() - 1; ++i) {
-		std::cout << v[i] << ", ";
-	}
-	std::cout << v[v.size() - 1] << '>';
+	std::cout << '>';
 }
