@@ -34,7 +34,12 @@ public:
 	}
 
 	Node* search(const T& k) {
-		return search(root.get(), k);
+		if (!root) {
+			return nullptr;
+		}
+		else {
+			return search(root.get(), k);
+		}
 	}
 
 	void preorder_tree_walk() {
@@ -99,34 +104,22 @@ private:
 
 };
 
-
 int main()
 {
 	int n = 0;
 	std::cin >> n;
-
-	//----------------------------------
-	char a = 0;
-	std::cin >> a;
 	BT<char> bt;
-	auto root = bt.make_root(a);
-	char b;
-	char c;
-	std::cin >> b >> c;
-	if (b != '.') {
-		auto temp = bt.make_left(root, b);
-	}
-	if (c != '.') {
-		auto temp = bt.make_right(root, c);
-	}
-	//----------------------------------
 
-	for (auto i = 0; i < n - 1; ++i) {
+	for (auto i = 0; i < n; ++i) {
 		char first;
 		char second;
 		char third;
 		std::cin >> first >> second >> third;
+
 		auto node = bt.search(first);
+		if (!bt.search(first)) {
+			node = bt.make_root(first);
+		}
 		if (second != '.') {
 			auto temp = bt.make_left(node, second);
 		}
