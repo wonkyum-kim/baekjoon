@@ -1,18 +1,11 @@
-#include <vector>
 #include <iostream>
+#include <vector>
 #include <algorithm>
 
-int main()
+long long lis(std::vector<long long>& A, int n)
 {
-	int n = 0;
-	std::cin >> n;
-	std::vector<long long> A(n + 1);
-	for (auto i = 1; i <= n; ++i) {
-		std::cin >> A[i];
-	}
 	std::vector<long long> L;
-
-	for (auto i = 1; i <= n; ++i) {
+	for (auto i = 0; i < n; ++i) {
 		if (L.empty() || L.back() < A[i]) {
 			L.push_back(A[i]);
 		}
@@ -22,6 +15,18 @@ int main()
 			L[idx] = A[i];
 		}
 	}
+	return L.size();
+}
 
-	std::cout << std::distance(L.begin(), L.end());
+int main()
+{
+	std::ios_base::sync_with_stdio(false);
+	std::cin.tie(0);
+	int n = 0;
+	std::cin >> n;
+	std::vector<long long> A(n);
+	for (auto i = 0; i < n; ++i) {
+		std::cin >> A[i];
+	}
+	std::cout << lis(A, n);
 }
