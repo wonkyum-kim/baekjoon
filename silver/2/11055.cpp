@@ -2,30 +2,27 @@
 #include <algorithm>
 #include <vector>
 
-int foo(std::vector<int>& A, int n)
+int foo(const std::vector<int>& A)
 {
-	int ans = 0;
-	std::vector<int> dp(n + 1);
-	for (auto i = 1; i <= n; ++i) {
-		dp[i] = A[i];
-		for (auto j = 1; j < i; ++j) {
-			if (A[j] < A[i] && dp[i] < dp[j] + A[i]) {
-				dp[i] = dp[j] + A[i];
+	const int n = A.size();
+	std::vector<int> dp = A;
+	for (auto i = 0; i < n; ++i) {
+		for (auto j = 0; j < i; ++j) {
+			if (A[j] < A[i]) {
+				dp[i] = std::max(dp[i], dp[j] + A[i]);
 			}
 		}
 	}
-	std::sort(dp.begin(), dp.end());
-	return dp.back();
+	return *std::max_element(dp.begin(), dp.end());
 }
 
 int main()
 {
 	int n = 0;
 	std::cin >> n;
-
-	std::vector<int> A(n + 1);
-	for (auto i = 1; i <= n; ++i) {
+	std::vector<int> A(n);
+	for (auto i = 0; i < n; ++i) {
 		std::cin >> A[i];
 	}
-	std::cout << foo(A, n);
+	std::cout << foo(A);
 }
