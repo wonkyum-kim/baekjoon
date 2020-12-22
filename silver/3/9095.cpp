@@ -1,16 +1,19 @@
 #include <iostream>
-#include <string>
 #include <vector>
 #include <algorithm>
+#include <numeric>
 
 std::vector<int> foo()
 {
-	std::vector<int> dp(12);
-	dp[1] = 1;
-	dp[2] = 2;
-	dp[3] = 4;
-	for (auto i = 4; i < 12; ++i) {
-		dp[i] = dp[i - 3] + dp[i - 2] + dp[i - 1];
+	std::vector<int> coins{ 1,2,3 };
+	std::vector<int> dp(11);
+	dp[0] = 1;
+	for (auto i = 1; i <= 10; ++i) {
+		for (const auto& c : coins) {
+			if (i >= c) {
+				dp[i] += dp[i - c];
+			}
+		}
 	}
 	return dp;
 }
@@ -23,6 +26,6 @@ int main()
 	for (auto i = 0; i < t; ++i) {
 		int n = 0;
 		std::cin >> n;
-		std::cout << dp[n] <<'\n';
+		std::cout << dp[n] << '\n';
 	}
 }
