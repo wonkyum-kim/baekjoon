@@ -3,59 +3,54 @@
 #include <queue>
 #include <algorithm>
 
-class Undirected_Graph {
-private:	
+class Graph {
+private:
 	int n;
 	std::vector<std::vector<int>> adj;
 	std::vector<bool> visited;
 public:
-	Undirected_Graph(int n) : n{ n }, adj(n), visited(n) {}
+	Graph(int n) : n{n},adj(n),visited(n,false){}
 
 	void add_edge(int u, int v) {
 		adj[u].push_back(v);
 		adj[v].push_back(u);
 	}
 
-	void dfs() {
-		std::fill(visited.begin(), visited.end(), false);
-		dfs(0);
+	void dfs(int u) {
+		if (visited[u]) {
+			return;
+		}
+		visited[u] = true;
+		for (auto v : adj[u]) {
+			dfs(v);
+		}
 	}
 
 	int component() {
 		int count = 0;
-		std::fill(visited.begin(), visited.end(), false);
 		for (auto i = 0; i < n; ++i) {
 			if (!visited[i]) {
 				dfs(i);
-				count++;
+				++count;
 			}
 		}
 		return count;
-	}
-
-private:
-	void dfs(int s) {
-		if (visited[s]) {
-			return;
-		}
-		visited[s] = true;
-		for (auto u : adj[s]) {
-			dfs(u);
-		}
 	}
 };
 
 int main()
 {
+	std::ios_base::sync_with_stdio(false);
+	std::cin.tie(0);
 	int n = 0;
 	int m = 0;
 	std::cin >> n >> m;
-	Undirected_Graph udg(n);
+	Graph g(n);
 	for (auto i = 0; i < m; ++i) {
 		int u = 0;
 		int v = 0;
 		std::cin >> u >> v;
-		udg.add_edge(u - 1, v - 1);
+		g.add_edge(u - 1, v - 1);
 	}
-	std::cout << udg.component();
+	std::cout << g.component();
 }
